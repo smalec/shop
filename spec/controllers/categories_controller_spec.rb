@@ -24,11 +24,11 @@ RSpec.describe CategoriesController, :type => :controller do
   # Category. As you add validations to Category, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {:name => 'Fruits'}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {:name => nil}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -63,6 +63,14 @@ RSpec.describe CategoriesController, :type => :controller do
     it "assigns the requested category as @category" do
       category = Category.create! valid_attributes
       get :edit, {:id => category.to_param}, valid_session
+      expect(assigns(:category)).to eq(category)
+    end
+  end
+
+  describe "GET products" do
+    it "assigns the requested category products as @products" do
+      category = Category.create! valid_attributes
+      get :products, {:id => category.to_param}, valid_session
       expect(assigns(:category)).to eq(category)
     end
   end
@@ -103,14 +111,14 @@ RSpec.describe CategoriesController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {:name => 'Vegatables'}
       }
 
       it "updates the requested category" do
         category = Category.create! valid_attributes
         put :update, {:id => category.to_param, :category => new_attributes}, valid_session
         category.reload
-        skip("Add assertions for updated state")
+        expect(assigns(:category)).to eq(category)
       end
 
       it "assigns the requested category as @category" do
